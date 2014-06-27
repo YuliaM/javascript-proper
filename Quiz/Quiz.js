@@ -27,16 +27,19 @@ window.onload = function () {
 
 var fillAnswers = function(){
     var questionDiv = $('questionDiv');
+    var answerErrorDiv = $("answerError");
 
     if (questionNumber === allQuestions.length) {
         var h2 = document.createElement('h2');
         h2.innerHTML = "Your total score is "+totalScore;
         questionDiv.innerHTML = "";
         questionDiv.appendChild(h2);
+        answerErrorDiv.innerHTML = "";
 
 
     }
     else {
+        answerErrorDiv.innerHTML = "";
         questionDiv.getElementsByTagName('h2').item(0).innerHTML = 'Question ' + (questionNumber + 1);
         $("answer1").nextSibling.innerHTML = allQuestions[questionNumber].choices[0];
         $("answer2").nextSibling.innerHTML = allQuestions[questionNumber].choices[1];
@@ -61,7 +64,10 @@ var nextQuestion = function(){
     else{
         var h3 = document.createElement('h3');
         h3.innerHTML = "Select an answer";
-        document.body.appendChild(h3);
+        answerError = $("answerError");
+        answerError.innerHTML = "";
+        answerError.appendChild(h3);
+
     }
 }
 function checkedRadioBtn(sGroupName)
