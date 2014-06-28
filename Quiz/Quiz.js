@@ -18,11 +18,7 @@ var allQuestions = [{
 var questionNumber = 0;
 var totalScore = 0;
 
-window.onload = function () {
 
-    fillAnswers();
-    $("button1").onclick = nextQuestion;
-}
 
 var fillAnswers = function(){
     var questionDiv = $("questionDiv");
@@ -46,7 +42,7 @@ var fillAnswers = function(){
         answerErrorDiv.innerHTML = "";
 
         var h2 = document.createElement('h2');
-        h2.innerHTML = 'Question ' + (questionNumber + 1);
+        h2.innerHTML = 'Question ' + (questionNumber + 1)+"<br>"+allQuestions[questionNumber].question+"<br>";
         questionDiv.appendChild(h2);
 
 
@@ -102,3 +98,7 @@ function checkedRadioBtn(sGroupName)
     }
 }
 
+window.onload = function () {
+    fillAnswers();
+    $("button1").onclick = nextQuestion;
+}
