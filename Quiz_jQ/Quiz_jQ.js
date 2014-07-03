@@ -2,13 +2,12 @@
  * Created by yulia on 6/28/14.
  */
 
-jQuery(document).ready(function() {
-    fillAnswers();
-    $("#button1").on('click',function(){
+$(document).ready(function() {
+    $("#next_button").on('click',function(){
         nextQuestion();
-    });
+    });//end of next_button click event
 
-
+    fillAnswers();
 
 });//end ready
 
@@ -36,12 +35,12 @@ var fillAnswers = function(){
 
     var questionDiv = $("#questionDiv");
     var answerErrorDiv = $("#answerErrorDiv");
-    var nextButtonDiv = $("#nextButtonDiv");
+    var buttonDiv = $("#button_div");
 
     if (questionNumber === allQuestions.length) {
 
-        answerErrorDiv.text("");
-        nextButtonDiv.text("");
+        answerErrorDiv.empty();
+        buttonDiv.empty();
 
         countTotalScore();
         var h2_total = "<h2>Your total score is "+totalScore+"</h2>";
@@ -49,15 +48,13 @@ var fillAnswers = function(){
 
     }
     else {
-        questionDiv.text("");
-        answerErrorDiv.text("");
+        questionDiv.empty();
+        answerErrorDiv.empty();
 
         var h2_number = "<h2>Question " + (questionNumber+1) +"</h2>";
-        questionDiv.append(h2_number);
-
         var h2_question = "<h2>Question " + (allQuestions[questionNumber].question) +"</h2>";
-        questionDiv.append(h2_question);
 
+        questionDiv.append(h2_number+h2_question);
 
         for(var i in allQuestions[questionNumber].choices){
 
@@ -71,9 +68,14 @@ var fillAnswers = function(){
 
 
         }
+        //select checkbox when the answer text is clicked
+        $("label").on('click',function(){
+            $(this).prev().attr('checked', 'checked');
+        });//end of lable click event
+
         if(questionNumber>0) {
             if ($("#back_button").length === 0) {
-                nextButtonDiv.append('<button id="back_button">Back</button>');
+                buttonDiv.append('<button id="back_button">Back</button>');
                 $("#back_button").on('click', function () {
                     backQuestion();
                 });
@@ -83,16 +85,25 @@ var fillAnswers = function(){
             $("#back_button").detach();
         }
     }
+    questionDiv.fadeIn("slow");
+    buttonDiv.fadeIn("slow");
+
 }
 var nextQuestion = function(){
+
     checkedAnswer= $('input[type="radio"]:checked');
+
 
     if(checkedAnswer.length > 0) {
         allAnswers[questionNumber] = checkedAnswer.val();
-
         questionNumber++;
-        fillAnswers();
-        $('input:radio[name=answer_radio]').filter('[value="'+allAnswers[questionNumber]+'"]').attr('checked', 'checked');
+
+        $("#button_div").fadeOut("slow");
+        $("#questionDiv").fadeOut("slow", function(){
+
+            fillAnswers();
+            $('input:radio[name=answer_radio]').filter('[value="' + allAnswers[questionNumber] + '"]').attr('checked', 'checked');
+        });
     }
     else{
 
@@ -104,12 +115,15 @@ var nextQuestion = function(){
 
 var backQuestion = function(){
     allAnswers[questionNumber] = $('input[type="radio"]:checked').val();
-
     questionNumber--;
-    fillAnswers();
-    $('input:radio[name=answer_radio]').filter('[value="'+allAnswers[questionNumber]+'"]').attr('checked', 'checked');
 
+    $("#button_div").fadeOut("slow");
+    $("#questionDiv").fadeOut("slow", function(){
 
+        fillAnswers();
+        $('input:radio[name=answer_radio]').filter('[value="'+allAnswers[questionNumber]+'"]').attr('checked', 'checked');
+
+    });
 
 }
 var countTotalScore = function(){
