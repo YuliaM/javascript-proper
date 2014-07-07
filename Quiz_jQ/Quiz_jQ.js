@@ -1,30 +1,16 @@
 /**
  * Created by yulia on 6/28/14.
  */
-
 $(document).ready(function() {
+    getJSONQuestion();
+
     $("#next_button").on('click',function(){
         nextQuestion();
     });//end of next_button click event
 
-    fillAnswers();
-
 });//end ready
 
-var allQuestions = [{
-    question: "Who is Prime Minister of the United Kingdom?",
-    choices: ["David Cameron", "Gordon Brown", "Winston Churchill", "Tony Blair"],
-    correctAnswer:0
-},{
-    question:"What is the capital of Italy",
-    choices:["Rome", "Moscow", "Yerevan"],
-    correctAnswer:0
-},{
-    question:"What is the capital of Mexico",
-    choices:["Dublin","Mexico City", "Brussels"],
-    correctAnswer:1
-}
-];
+var allQuestions = [];
 var allAnswers = [];
 
 var questionNumber = 0,
@@ -32,7 +18,6 @@ var questionNumber = 0,
 var checkedAnswer;
 
 var fillAnswers = function(){
-
     var questionDiv = $("#questionDiv");
     var answerErrorDiv = $("#answerErrorDiv");
     var buttonDiv = $("#button_div");
@@ -88,6 +73,21 @@ var fillAnswers = function(){
     questionDiv.fadeIn("slow");
     buttonDiv.fadeIn("slow");
 
+}
+var getJSONQuestion = function(){
+    $.getJSON("questions.json", function(data) {
+        $.each(data, function() {
+            $.each(this, function(key, value) {
+                var obj = {
+                    question:value.question,
+                    choices:value.choices,
+                    correctAnswer:value.correctAnswer
+                }
+                allQuestions.push(obj);
+            });
+            fillAnswers();
+        });
+    });
 }
 var nextQuestion = function(){
 

@@ -1,0 +1,20 @@
+{"allQuestions":
+    [
+        {
+            "question":"Who is Prime Minister of the United Kingdom?",
+            "choices":["David Cameron","Gordon Brown","Winston Churchill","Tony Blair"],
+            "correctAnswer":0
+        },
+        {
+            "question":"What is the capital of Italy?",
+            "choices":["Rome", "Moscow", "Yerevan"],
+            "correctAnswer":0
+        },
+        {
+            "question": "What is the capital of Mexico?",
+            "choices": ["Dublin", "Mexico City", "Brussels"],
+            "correctAnswer": 1
+        }
+    ]
+
+}
